@@ -23,6 +23,7 @@ export const App: React.FC = () => {
   // Simulation controls
   const [surgeActive, setSurgeActive] = useState(true);
   const [isApiMode, setIsApiMode] = useState(false); // Mode toggle: Local Emulation vs Live Backend
+  const [isLoading, setIsLoading] = useState(false);
   const [utcTime, setUtcTime] = useState('');
   const [showResetToast, setShowResetToast] = useState(false);
 
@@ -37,9 +38,9 @@ export const App: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Telemetry stream interval (every 3 seconds)
+  // Telemetry local stream interval (every 3 seconds)
   useEffect(() => {
-    if (isApiMode) return; // In API mode, we would poll from backend. For MVP 1 we simulate locally.
+    if (isApiMode) return;
 
     const interval = setInterval(() => {
       setTowers(prevTowers => simulateTelemetryTick(prevTowers, surgeActive));
@@ -48,10 +49,50 @@ export const App: React.FC = () => {
     return () => clearInterval(interval);
   }, [surgeActive, isApiMode]);
 
+  // Telemetry live server API polling (every 3 seconds)
+  useEffect(() => {
+    if (!isApiMode) {
+      setIsLoading(false);
+      return;
+    }
+
+    const fetchTelemetry = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/telemetry');
+        if (response.ok) {
+          const data = await response.json();
+          setTowers(data);
+        }
+      } catch (error) {
+        console.error("Error fetching live telemetry from FastAPI backend:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    setIsLoading(true);
+    fetchTelemetry();
+
+    const interval = setInterval(fetchTelemetry, 3000);
+    return () => clearInterval(interval);
+  }, [isApiMode]);
+
   // Reset simulation function
   const handleResetSimulation = () => {
-    setTowers(getInitialTowers());
-    setSurgeActive(true);
+    if (isApiMode) {
+      // Re-fetch live data to align with backend
+      setIsLoading(true);
+      fetch('http://127.0.0.1:8000/api/telemetry')
+        .then(res => res.json())
+        .then(data => {
+          setTowers(data);
+          setIsLoading(false);
+        })
+        .catch(err => console.error(err));
+    } else {
+      setTowers(getInitialTowers());
+      setSurgeActive(true);
+    }
     setShowResetToast(true);
     setTimeout(() => setShowResetToast(false), 3000);
   };
@@ -125,9 +166,8 @@ export const App: React.FC = () => {
               className={`px-3 py-1.5 rounded-md transition-all duration-200 flex items-center gap-1.5 ${
                 isApiMode 
                   ? 'bg-cyan-500/15 text-cyan-400 font-bold border border-cyan-500/10' 
-                  : 'text-slate-500 hover:text-slate-400 cursor-not-allowed'
+                  : 'text-slate-400 hover:text-slate-200'
               }`}
-              disabled={true}
               title="FastAPI Live Engine (MVP 2 Tier)"
             >
               <Database className="h-3.5 w-3.5" />
@@ -218,20 +258,49 @@ export const App: React.FC = () => {
       <main className="flex-1 p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 z-10 items-stretch overflow-hidden">
         {/* Sidebar Left Column */}
         <section className="lg:col-span-4 xl:col-span-3 flex flex-col h-full min-h-[400px]">
-          <Sidebar
-            towers={towers}
-            selectedTowerId={selectedTowerId}
-            onSelectTower={handleSelectTower}
-          />
+          {isLoading ? (
+            <div className="glass-panel rounded-2xl p-5 space-y-4 h-full border border-slate-800 shimmer">
+              <div className="h-6 w-24 bg-slate-800/80 rounded animate-pulse" />
+              <div className="space-y-3">
+                {[1, 2, 3, 4, 5].map(i => (
+                  <div key={i} className="h-20 bg-slate-900/40 border border-slate-800/40 rounded-xl p-4 space-y-2">
+                    <div className="h-4 w-1/3 bg-slate-800/60 rounded animate-pulse" />
+                    <div className="h-3 w-2/3 bg-slate-800/40 rounded animate-pulse" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <Sidebar
+              towers={towers}
+              selectedTowerId={selectedTowerId}
+              onSelectTower={handleSelectTower}
+            />
+          )}
         </section>
 
         {/* Detailed View Pane Right Column */}
         <section className="lg:col-span-8 xl:col-span-9 flex flex-col justify-start">
-          <SectorDetail
-            selectedTower={selectedTower}
-            selectedSectorId={selectedSectorId}
-            onSelectSector={setSelectedSectorId}
-          />
+          {isLoading ? (
+            <div className="space-y-6 h-full shimmer">
+              <div className="glass-panel rounded-2xl p-5 border border-slate-800 h-20 animate-pulse bg-slate-900/20" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="glass-panel rounded-2xl p-5 border border-slate-800 h-40 animate-pulse bg-slate-900/20" />
+                ))}
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div className="lg:col-span-7 glass-panel rounded-2xl p-5 border border-slate-800 h-64 animate-pulse bg-slate-900/20" />
+                <div className="lg:col-span-5 glass-panel rounded-2xl p-5 border border-slate-800 h-64 animate-pulse bg-slate-900/20" />
+              </div>
+            </div>
+          ) : (
+            <SectorDetail
+              selectedTower={selectedTower}
+              selectedSectorId={selectedSectorId}
+              onSelectSector={setSelectedSectorId}
+            />
+          )}
         </section>
       </main>
 

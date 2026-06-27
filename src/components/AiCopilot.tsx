@@ -29,9 +29,7 @@ export const AiCopilot = ({ sector, towerId }: AiCopilotProps) => {
     'Correlating FWA subscriber ratios with CQI degradation...',
     'Invoking 5G RAN Architectural Knowledge Base...',
     'Compiling diagnostic engineering report...'
-  ];
-
-  const handleAnalyze = () => {
+  ];  const handleAnalyze = async () => {
     setLoading(true);
     setLoadingStage(0);
     setResult(null);
@@ -48,6 +46,34 @@ export const AiCopilot = ({ sector, towerId }: AiCopilotProps) => {
       });
     }, 400);
 
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/analyze-sector', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          tower_id: towerId,
+          sector_id: sector.sector_id,
+          history: sector.history,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        clearInterval(interval);
+        setResult({
+          rootCause: data.root_cause_analysis,
+          remediation: data.recommended_remediation,
+        });
+        setLoading(false);
+        return;
+      }
+    } catch (error) {
+      console.warn("FastAPI backend offline, running local mock analysis fallback.", error);
+    }
+
+    // Fallback Mock Logic (runs if backend request fails)
     setTimeout(() => {
       clearInterval(interval);
       
@@ -106,7 +132,6 @@ The sector **${sector.sector_id}** is operating within optimal bounds.
       setLoading(false);
     }, stages.length * 400 + 100);
   };
-
   return (
     <div className="glass-panel rounded-2xl p-5 border border-slate-800 flex flex-col h-full">
       <div className="flex items-center gap-2 mb-4">
