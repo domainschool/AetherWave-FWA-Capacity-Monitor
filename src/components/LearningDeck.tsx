@@ -340,69 +340,173 @@ Modify the existing Next.js frontend dashboard to fetch data from this FastAPI \
             )}
 
             {activeTab === 4 && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <h3 className="text-lg font-bold font-outfit text-slate-100 flex items-center gap-2 border-b border-slate-900 pb-3">
                   <DollarSign className="h-5 w-5 text-cyan-400" />
-                  Commercial Valuation
+                  Commercial Valuation & Disruption Strategy
                 </h3>
-                <p className="text-sm text-slate-300">
-                  If an enterprise telecommunications carrier hired an external boutique consulting firm or systems integrator (such as Accenture, Deloitte, or specialized telco dev agencies) to build this telemetry dashboard, the commercial budget would be valued as follows:
-                </p>
-                <div className="overflow-hidden border border-slate-900 rounded-xl bg-slate-950/50">
-                  <table className="w-full text-left text-xs font-mono">
-                    <thead className="bg-slate-900 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
-                      <tr>
-                        <th className="px-4 py-3">Workstream / Scope</th>
-                        <th className="px-4 py-3">Engineering Hours</th>
-                        <th className="px-4 py-3">Rate ($/hr)</th>
-                        <th className="px-4 py-3 text-right">Estimated Cost</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900 text-slate-300">
-                      <tr>
-                        <td className="px-4 py-3 font-sans font-medium text-slate-200">Design, Architecture & 3GPP Spec Review</td>
-                        <td className="px-4 py-3">120 hrs</td>
-                        <td className="px-4 py-3">$250</td>
-                        <td className="px-4 py-3 text-right font-semibold text-slate-200">$30,000</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-3 font-sans font-medium text-slate-200">FastAPI Backend & Derivative Math Logic</td>
-                        <td className="px-4 py-3">220 hrs</td>
-                        <td className="px-4 py-3">$200</td>
-                        <td className="px-4 py-3 text-right font-semibold text-slate-200">$44,000</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-3 font-sans font-medium text-slate-200">Generative AI Diagnostics Integration</td>
-                        <td className="px-4 py-3">110 hrs</td>
-                        <td className="px-4 py-3">$225</td>
-                        <td className="px-4 py-3 text-right font-semibold text-slate-200">$24,750</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-3 font-sans font-medium text-slate-200">Vite React Dashboard NOC Front-End UI</td>
-                        <td className="px-4 py-3">240 hrs</td>
-                        <td className="px-4 py-3">$175</td>
-                        <td className="px-4 py-3 text-right font-semibold text-slate-200">$42,000</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-3 font-sans font-medium text-slate-200">CI/CD Setup, Git Workflows & Deployment</td>
-                        <td className="px-4 py-3">80 hrs</td>
-                        <td className="px-4 py-3">$185</td>
-                        <td className="px-4 py-3 text-right font-semibold text-slate-200">$14,800</td>
-                      </tr>
-                      <tr className="bg-cyan-500/5 text-cyan-400 font-bold border-t border-cyan-500/25">
-                        <td className="px-4 py-3 font-sans uppercase">Total Consulting Valuation</td>
-                        <td className="px-4 py-3">770 hrs</td>
-                        <td className="px-4 py-3">-</td>
-                        <td className="px-4 py-3 text-right text-sm font-bold">$155,550</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div className="p-4 bg-slate-900/40 border border-slate-800/80 rounded-xl">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Enterprise Pricing Note</span>
-                  <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                    This estimate represents a standard MVP deployment. Production extensions containing security audit hardening, enterprise authentication (SSO), localized hosting, and 24/7 SLA maintenance contracts regularly push the commercial pricing for this class of dashboard past **$300,000**.
+
+                {/* Executive Summary Card */}
+                <div className="p-5 rounded-2xl bg-slate-900/30 border border-slate-800 space-y-2">
+                  <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider block">Executive Summary</span>
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    The <strong>AetherWave</strong> project, an enterprise-grade telemetry and predictive monitoring platform, is estimated to cost over <strong>$550,000</strong> and take <strong>6 months</strong> with traditional consulting delivery. In stark contrast, a highly functional MVP leveraging modern development practices like vibe-coding, serverless architecture, and AI assistance could be deployed in just <strong>5 weeks</strong> for under <strong>$500</strong>, demonstrating a monumental cost efficiency gain.
                   </p>
+                </div>
+
+                {/* Value Disrupted Card */}
+                <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-500/5 to-cyan-500/5 border border-amber-500/20 text-center space-y-2 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-radial-gradient from-amber-500/10 via-transparent to-transparent pointer-events-none" />
+                  <span className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 inline-block">
+                    Value Disrupted
+                  </span>
+                  <p className="text-xs text-slate-400 max-w-md mx-auto mt-1 leading-relaxed">
+                    By leveraging deep Domain Knowledge in the <strong className="text-slate-200">Telecommunications</strong> sector, you are disrupting a corporate value of:
+                  </p>
+                  <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-amber-400 drop-shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                    $558,750
+                  </div>
+                </div>
+
+                {/* Side-by-Side Cost Comparison Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  
+                  {/* Agency Card */}
+                  <div className="p-5 rounded-2xl bg-slate-950 border border-red-500/10 space-y-4">
+                    <div className="flex items-center justify-between border-b border-slate-900 pb-2">
+                      <h4 className="text-xs font-mono font-bold text-red-400 uppercase tracking-wider">IT Consulting Agency Cost</h4>
+                      <span className="text-[9px] px-2 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20 font-mono">Premium Delivery Agency</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400 leading-relaxed">
+                      Sourced using standard rates from Deloitte, TCS, Accenture, IBM, and Infosys. Assumes corporate middleware overheads, QA cycles, and service level support agreements.
+                    </p>
+                    <div className="grid grid-cols-3 gap-3 text-center">
+                      <div className="p-2.5 bg-slate-900/40 rounded-xl border border-slate-800/40">
+                        <span className="text-[8px] font-mono text-slate-500 uppercase block">Total Budget</span>
+                        <span className="text-sm font-bold text-slate-200 font-mono">$559,200</span>
+                      </div>
+                      <div className="p-2.5 bg-slate-900/40 rounded-xl border border-slate-800/40">
+                        <span className="text-[8px] font-mono text-slate-500 uppercase block">Effort Hours</span>
+                        <span className="text-sm font-bold text-slate-200 font-mono">5,136h</span>
+                      </div>
+                      <div className="p-2.5 bg-slate-900/40 rounded-xl border border-slate-800/40">
+                        <span className="text-[8px] font-mono text-slate-500 uppercase block">Delivery Time</span>
+                        <span className="text-sm font-bold text-slate-200 font-mono">24 wks</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between text-[10px] font-mono text-slate-500 border-t border-slate-900 pt-2">
+                      <span>Blended Hourly Billing Rate:</span>
+                      <span className="text-slate-300 font-bold">$109/hr</span>
+                    </div>
+                  </div>
+
+                  {/* Vibe-Coded Card */}
+                  <div className="p-5 rounded-2xl bg-slate-950 border border-cyan-500/15 space-y-4 shadow-[0_0_15px_rgba(6,182,212,0.03)]">
+                    <div className="flex items-center justify-between border-b border-slate-900 pb-2">
+                      <h4 className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider">Vibe-Coded MVP Cost</h4>
+                      <span className="text-[9px] px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">Domain School MVP</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400 leading-relaxed">
+                      Assumes code built using AI-driven orchestration, modern serverless templates (Vercel/Supabase), and high-intensity agile build loops.
+                    </p>
+                    <div className="grid grid-cols-3 gap-3 text-center">
+                      <div className="p-2.5 bg-slate-900/40 rounded-xl border border-slate-800/40">
+                        <span className="text-[8px] font-mono text-slate-500 uppercase block">Infrastructure</span>
+                        <span className="text-sm font-bold text-cyan-400 font-mono">$450</span>
+                      </div>
+                      <div className="p-2.5 bg-slate-900/40 rounded-xl border border-slate-800/40">
+                        <span className="text-[8px] font-mono text-slate-500 uppercase block">Capital Saved</span>
+                        <span className="text-sm font-bold text-cyan-400 font-mono">$558,750</span>
+                      </div>
+                      <div className="p-2.5 bg-slate-900/40 rounded-xl border border-slate-800/40">
+                        <span className="text-[8px] font-mono text-slate-500 uppercase block">Build Phase</span>
+                        <span className="text-sm font-bold text-cyan-400 font-mono">5 wks</span>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-slate-400 border-t border-slate-900 pt-2 leading-relaxed font-sans">
+                      This AetherWave project, traditionally costing over half a million dollars and taking six months with conventional consulting, can be rapidly deployed as a highly functional MVP in just 5 weeks for less than $500. By leveraging vibe-coding for the frontend, serverless platforms like Vercel and Supabase, and AI code generation, the Domain School approach bypasses corporate bureaucracy and excessive overhead. This model dramatically slashes costs by over 99%, delivering significant value with minimal initial investment.
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Itemized Resource Allocation Table */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between border-b border-slate-900 pb-2">
+                    <h4 className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Itemized Resource Allocation</h4>
+                    <span className="text-[9px] text-slate-500 font-mono">Rates model average Tier 1 agency billing</span>
+                  </div>
+                  <div className="overflow-hidden border border-slate-900 rounded-xl bg-slate-950/50">
+                    <table className="w-full text-left text-[11px] font-mono">
+                      <thead className="bg-slate-900 text-slate-400 uppercase text-[9px] tracking-wider border-b border-slate-800">
+                        <tr>
+                          <th className="px-4 py-2.5">Resource / Role</th>
+                          <th className="px-4 py-2.5">Rate / Hr</th>
+                          <th className="px-4 py-2.5">Allocated Hours</th>
+                          <th className="px-4 py-2.5">Subtotal</th>
+                          <th className="px-4 py-2.5">Delivery Focus</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-900 text-slate-300">
+                        <tr>
+                          <td className="px-4 py-2.5 font-sans font-semibold text-slate-200">Delivery Manager/Project Manager</td>
+                          <td className="px-4 py-2.5">$120/hr</td>
+                          <td className="px-4 py-2.5">480h</td>
+                          <td className="px-4 py-2.5 font-bold text-amber-500">$57,600</td>
+                          <td className="px-4 py-2.5 font-sans text-slate-400">Oversees project execution, manages client communication, facilitates agile ceremonies, and ensures timely delivery and risk mitigation.</td>
+                        </tr>
+                        <tr>
+                          <td className="px-4 py-2.5 font-sans font-semibold text-slate-200">Lead Solutions Architect</td>
+                          <td className="px-4 py-2.5">$150/hr</td>
+                          <td className="px-4 py-2.5">576h</td>
+                          <td className="px-4 py-2.5 font-bold text-amber-500">$86,400</td>
+                          <td className="px-4 py-2.5 font-sans text-slate-400">Defines the end-to-end technical architecture for AetherWave, selects core technologies, and ensures system scalability, resilience, and security compliance.</td>
+                        </tr>
+                        <tr>
+                          <td className="px-4 py-2.5 font-sans font-semibold text-slate-200">Senior Backend Engineer</td>
+                          <td className="px-4 py-2.5">$110/hr</td>
+                          <td className="px-4 py-2.5">960h</td>
+                          <td className="px-4 py-2.5 font-bold text-amber-500">$105,600</td>
+                          <td className="px-4 py-2.5 font-sans text-slate-400">Develops the high-throughput ingestion layer, implements the time-series analytics engine, integrates with the database, and builds LLM interaction APIs.</td>
+                        </tr>
+                        <tr>
+                          <td className="px-4 py-2.5 font-sans font-semibold text-slate-200">Senior Frontend Engineer</td>
+                          <td className="px-4 py-2.5">$110/hr</td>
+                          <td className="px-4 py-2.5">960h</td>
+                          <td className="px-4 py-2.5 font-bold text-amber-500">$105,600</td>
+                          <td className="px-4 py-2.5 font-sans text-slate-400">Crafts the interactive Next.js web application, integrates WebSockets for real-time data, and implements advanced multi-axis visualizations and enterprise security.</td>
+                        </tr>
+                        <tr>
+                          <td className="px-4 py-2.5 font-sans font-semibold text-slate-200">DevOps & Deployment Engineer</td>
+                          <td className="px-4 py-2.5">$100/hr</td>
+                          <td className="px-4 py-2.5">720h</td>
+                          <td className="px-4 py-2.5 font-bold text-amber-500">$72,000</td>
+                          <td className="px-4 py-2.5 font-sans text-slate-400">Designs, implements, and manages the production-grade cloud infrastructure, automates CI/CD pipelines, and ensures platform observability and operational readiness.</td>
+                        </tr>
+                        <tr>
+                          <td className="px-4 py-2.5 font-sans font-semibold text-slate-200">QA / Testing Engineer</td>
+                          <td className="px-4 py-2.5">$90/hr</td>
+                          <td className="px-4 py-2.5">960h</td>
+                          <td className="px-4 py-2.5 font-bold text-amber-500">$86,400</td>
+                          <td className="px-4 py-2.5 font-sans text-slate-400">Develops and executes comprehensive test strategies, including functional, performance, and security testing, to validate the platform's reliability and quality.</td>
+                        </tr>
+                        <tr>
+                          <td className="px-4 py-2.5 font-sans font-semibold text-slate-200">Business Analyst</td>
+                          <td className="px-4 py-2.5">$95/hr</td>
+                          <td className="px-4 py-2.5">480h</td>
+                          <td className="px-4 py-2.5 font-bold text-amber-500">$45,600</td>
+                          <td className="px-4 py-2.5 font-sans text-slate-400">Facilitates requirements gathering from telecommunications carriers, translates business needs into detailed user stories, and ensures alignment with project objectives.</td>
+                        </tr>
+                        <tr className="bg-amber-500/5 text-amber-400 font-bold border-t border-amber-500/20">
+                          <td className="px-4 py-2.5 font-sans uppercase">Project Estimation Total</td>
+                          <td className="px-4 py-2.5">-</td>
+                          <td className="px-4 py-2.5">5,136h</td>
+                          <td className="px-4 py-2.5 font-black text-sm">$559,200</td>
+                          <td className="px-4 py-2.5 font-sans text-slate-400 text-[10px]">Value disrupted for a $450 vibe-coded MVP build.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             )}
