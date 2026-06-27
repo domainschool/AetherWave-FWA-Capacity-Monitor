@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getInitialTowers, simulateTelemetryTick } from './mockData';
 import { Sidebar } from './components/Sidebar';
 import { SectorDetail } from './components/SectorDetail';
+import { LearningDeck } from './components/LearningDeck';
 import { 
   Radio, 
   RefreshCw, 
@@ -12,7 +13,8 @@ import {
   Flame,
   AlertOctagon,
   Users,
-  CheckCircle2
+  CheckCircle2,
+  BookOpen
 } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -22,6 +24,7 @@ export const App: React.FC = () => {
   
   // Simulation controls
   const [surgeActive, setSurgeActive] = useState(true);
+  const [isLearningDeckOpen, setIsLearningDeckOpen] = useState(false);
   const [isApiMode, setIsApiMode] = useState(false); // Mode toggle: Local Emulation vs Live Backend
   const [isLoading, setIsLoading] = useState(false);
   const [utcTime, setUtcTime] = useState('');
@@ -204,6 +207,16 @@ export const App: React.FC = () => {
             <RefreshCw className="h-3.5 w-3.5" />
             Reset Stream
           </button>
+
+          {/* Learning Deck Trigger */}
+          <button
+            onClick={() => setIsLearningDeckOpen(true)}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-cyan-500/20 to-blue-600/20 hover:from-cyan-500/30 hover:to-blue-600/30 border border-cyan-500/35 text-xs font-semibold font-mono tracking-wide text-cyan-300 transition-all duration-200 active:scale-[0.98]"
+            title="Open learning deck & system architecture"
+          >
+            <BookOpen className="h-3.5 w-3.5 text-cyan-400" />
+            Learning Deck
+          </button>
         </div>
       </header>
 
@@ -320,6 +333,12 @@ export const App: React.FC = () => {
           Channel Core: 3GPP Rel-17 Compliant Emulation
         </span>
       </footer>
+
+      {/* Learning Deck Overlay Modal */}
+      <LearningDeck
+        isOpen={isLearningDeckOpen}
+        onClose={() => setIsLearningDeckOpen(false)}
+      />
     </div>
   );
 };
